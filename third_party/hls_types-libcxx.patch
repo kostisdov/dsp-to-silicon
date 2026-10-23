@@ -1,0 +1,32 @@
+diff --git a/include/ap_fixed_special.h b/include/ap_fixed_special.h
+index 0f7a9f7..94ac541 100644
+--- a/include/ap_fixed_special.h
++++ b/include/ap_fixed_special.h
+@@ -28,9 +28,8 @@
+ // FIXME AP_AUTOCC cannot handle many standard headers, so declare instead of
+ // include.
+ // #include <complex>
+-namespace std {
+-template<typename _Tp> class complex;
+-}
++// patched for libc++ (std::complex lives in an inline namespace there)
++#include <complex>
+ 
+ /*
+   TODO: Modernize the code using C++11/C++14
+diff --git a/include/ap_int_special.h b/include/ap_int_special.h
+index 3afc619..c24da42 100644
+--- a/include/ap_int_special.h
++++ b/include/ap_int_special.h
+@@ -28,9 +28,8 @@
+ // FIXME AP_AUTOCC cannot handle many standard headers, so declare instead of
+ // include.
+ // #include <complex>
+-namespace std {
+-template<typename _Tp> class complex;
+-}
++// patched for libc++ (std::complex lives in an inline namespace there)
++#include <complex>
+ 
+ /*
+   TODO: Modernize the code using C++11/C++14

@@ -1,0 +1,8 @@
+.venv/
+build/
+sim_build/
+__pycache__/
+*.vcd
+*.fst
+results.xml
+third_party/hls_types/

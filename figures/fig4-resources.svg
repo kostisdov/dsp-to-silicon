@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="648pt" height="230.4pt" viewBox="0 0 648 230.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-23T14:26:38.707437</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 230.4 
+L 648 230.4 
+L 648 0 
+L 0 0 
+z
+" style="fill: #fbfaf8"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 12.96 198.478438 
+L 211.68 198.478438 
+L 211.68 28.036172 
+L 12.96 28.036172 
+z
+" style="fill: #fbfaf8"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 21.992727 198.478438 
+L 89.738182 198.478438 
+L 89.738182 155.402134 
+L 21.992727 155.402134 
+z
+" clip-path="url(#p9172ae4fba)" style="fill: #c34a22"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 134.901818 198.478438 
+L 202.647273 198.478438 
+L 202.647273 54.03584 
+L 134.901818 54.03584 
+z
+" clip-path="url(#p9172ae4fba)" style="fill: #1e3d52"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="mdccd890eb1" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5c554a; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mdccd890eb1" x="55.865455" y="198.478438" style="fill: #5c554a; stroke: #5c554a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #5c554a" x="55.865455" y="214.554609" transform="rotate(-0 55.865455 214.554609)">A: table</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#mdccd890eb1" x="168.774545" y="198.478438" style="fill: #5c554a; stroke: #5c554a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #5c554a" x="168.774545" y="214.554609" transform="rotate(-0 168.774545 214.554609)">B: CORDIC</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2"/>
+   <g id="patch_5">
+    <path d="M 12.96 198.478438 
+L 211.68 198.478438 
+" style="fill: none; stroke: #d8cfbc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 11px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="55.865455" y="153.017368" transform="rotate(-0 55.865455 153.017368)">739</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="168.774545" y="51.651074" transform="rotate(-0 168.774545 51.651074)">2478</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="112.32" y="22.036172" transform="rotate(-0 112.32 22.036172)">LUT</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 224.64 198.478438 
+L 423.36 198.478438 
+L 423.36 28.036172 
+L 224.64 28.036172 
+z
+" style="fill: #fbfaf8"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 233.672727 198.478438 
+L 301.418182 198.478438 
+L 301.418182 186.783026 
+L 233.672727 186.783026 
+z
+" clip-path="url(#p96df5f7ab8)" style="fill: #c34a22"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 346.581818 198.478438 
+L 414.327273 198.478438 
+L 414.327273 54.03584 
+L 346.581818 54.03584 
+z
+" clip-path="url(#p96df5f7ab8)" style="fill: #1e3d52"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#mdccd890eb1" x="267.545455" y="198.478438" style="fill: #5c554a; stroke: #5c554a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #5c554a" x="267.545455" y="214.554609" transform="rotate(-0 267.545455 214.554609)">A: table</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mdccd890eb1" x="380.454545" y="198.478438" style="fill: #5c554a; stroke: #5c554a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #5c554a" x="380.454545" y="214.554609" transform="rotate(-0 380.454545 214.554609)">B: CORDIC</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4"/>
+   <g id="patch_9">
+    <path d="M 224.64 198.478438 
+L 423.36 198.478438 
+" style="fill: none; stroke: #d8cfbc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 11px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="267.545455" y="184.398261" transform="rotate(-0 267.545455 184.398261)">137</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="380.454545" y="51.651074" transform="rotate(-0 380.454545 51.651074)">1692</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="324" y="22.036172" transform="rotate(-0 324 22.036172)">FF</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_10">
+    <path d="M 436.32 198.478438 
+L 635.04 198.478438 
+L 635.04 28.036172 
+L 436.32 28.036172 
+z
+" style="fill: #fbfaf8"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 445.352727 198.478438 
+L 513.098182 198.478438 
+L 513.098182 54.03584 
+L 445.352727 54.03584 
+z
+" clip-path="url(#p29d277b098)" style="fill: #c34a22"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 558.261818 198.478438 
+L 626.007273 198.478438 
+L 626.007273 198.478438 
+L 558.261818 198.478438 
+z
+" clip-path="url(#p29d277b098)" style="fill: #1e3d52"/>
+   </g>
+   <g id="matplotlib.axis_5">
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#mdccd890eb1" x="479.225455" y="198.478438" style="fill: #5c554a; stroke: #5c554a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #5c554a" x="479.225455" y="214.554609" transform="rotate(-0 479.225455 214.554609)">A: table</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mdccd890eb1" x="592.134545" y="198.478438" style="fill: #5c554a; stroke: #5c554a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #5c554a" x="592.134545" y="214.554609" transform="rotate(-0 592.134545 214.554609)">B: CORDIC</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_6"/>
+   <g id="patch_13">
+    <path d="M 436.32 198.478438 
+L 635.04 198.478438 
+" style="fill: none; stroke: #d8cfbc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="479.225455" y="51.651074" transform="rotate(-0 479.225455 51.651074)">5</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="592.134545" y="196.093672" transform="rotate(-0 592.134545 196.093672)">0</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 12px; font-family: 'Georgia', 'Times New Roman', 'DejaVu Serif', serif; text-anchor: middle; fill: #221e17" x="535.68" y="22.036172" transform="rotate(-0 535.68 22.036172)">DSP48</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9172ae4fba">
+   <rect x="12.96" y="28.036172" width="198.72" height="170.442266"/>
+  </clipPath>
+  <clipPath id="p96df5f7ab8">
+   <rect x="224.64" y="28.036172" width="198.72" height="170.442266"/>
+  </clipPath>
+  <clipPath id="p29d277b098">
+   <rect x="436.32" y="28.036172" width="198.72" height="170.442266"/>
+  </clipPath>
+ </defs>
+</svg>

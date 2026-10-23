@@ -1,0 +1,21 @@
+[project]
+name = "dsp-to-silicon"
+version = "0.1.0"
+description = "z/|z| from floating point to verified FPGA pipelines"
+authors = [
+    { name = "kostisdovelos", email = "kostisdovelos@hotmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "cocotb>=2",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
+    "pytest>=9.1.1",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
