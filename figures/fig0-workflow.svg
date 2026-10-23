@@ -9,13 +9,15 @@
   </defs>
   <rect width="900" height="300" fill="#fbfaf8"/>
 
-  <!-- golden vectors: fixed-point model to RTL verification -->
+  <!-- golden vectors: fixed-point model to the HLS testbench and to RTL verification -->
   <path d="M228,115 V40 H524 V113" fill="none" stroke="#c34a22" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arA)"/>
+  <path d="M376,40 V63" fill="none" stroke="#c34a22" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arA)"/>
   <text x="376" y="32" text-anchor="middle" font-size="13" fill="#c34a22" font-style="italic">golden vectors and expected outputs</text>
 
   <!-- feedback: error budget and resources/timing -->
-  <path d="M190,185 V214 H80 V187" fill="none" stroke="#5c554a" stroke-width="1.1" marker-end="url(#ar)"/>
-  <text x="135" y="230" text-anchor="middle" font-size="12" fill="#5c554a" font-style="italic">error budget</text>
+  <path d="M80,185 V214 H190 V187" fill="none" stroke="#5c554a" stroke-width="1.1" marker-end="url(#ar)"/>
+  <text x="135" y="230" text-anchor="middle" font-size="12" fill="#5c554a" font-style="italic">error against float</text>
+  <text x="135" y="244" text-anchor="middle" font-size="12" fill="#5c554a" font-style="italic">sets the word lengths</text>
   <path d="M672,185 V268 H266 V187" fill="none" stroke="#5c554a" stroke-width="1.1" marker-end="url(#ar)"/>
   <text x="469" y="285" text-anchor="middle" font-size="12" fill="#5c554a" font-style="italic">resources and timing: revise word lengths or architecture</text>
 
@@ -51,7 +53,7 @@
     <text x="228" y="177" font-size="12" fill="#5c554a">golden reference</text>
 
     <text x="376" y="94" font-size="15">HLS C++</text>
-    <text x="376" y="113" font-size="12" fill="#5c554a">C-sim,</text>
+    <text x="376" y="113" font-size="12" fill="#5c554a">C-sim, C synthesis,</text>
     <text x="376" y="127" font-size="12" fill="#5c554a">C/RTL co-simulation</text>
 
     <text x="376" y="194" font-size="15">Hand-written RTL</text>

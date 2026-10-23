@@ -5,8 +5,8 @@
   "slope_bits": 10,
   "max_slope": 1018,
   "lsb": "2^-17",
-  "max_err_interp_lsb": 2.256872969213873,
-  "max_err_entry_below_lsb": 977.5447347204899
+  "max_err_interp_lsb": 2.381073150812881,
+  "max_err_entry_below_lsb": 1018.0386766817246
  },
  "sweep_a": [
   {

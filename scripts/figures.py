@@ -83,9 +83,19 @@ def fig_table(res):
     a2.legend(loc="upper right", fontsize=10)
     clean(a2)
     save(fig, "fig1-rsqrt-table.svg")
+    # worst case over every (address, fraction) cell, at both ends of the bits below the fraction
+    off = 1 << (A - 2)
+    K, Fm = np.meshgrid(np.arange(off, 1 << A), np.arange(1 << F), indexing="ij")
+    w_i = w_n = 0.0
+    for sub in (0, (1 << (32 - A - F)) - 1):
+        mm = (K << (32 - A)) | (Fm << (32 - A - F)) | sub
+        ex = 2.0 ** cfg.r_frac / np.sqrt(mm / 2.0 ** 32)
+        ri = base[K - off] - ((slope[K - off] * Fm + (1 << (F - 1))) >> F)
+        w_i = max(w_i, float(np.abs(ri - ex).max()))
+        w_n = max(w_n, float(np.abs(base[K - off] - ex).max()))
     res["table"] = {"entries": int(len(base)), "base_bits": int(base.max()).bit_length(), "slope_bits": 10,
                     "max_slope": int(slope.max()), "lsb": f"2^-{cfg.r_frac}",
-                    "max_err_interp_lsb": float(np.abs(e_i).max()), "max_err_entry_below_lsb": float(np.abs(e_n).max())}
+                    "max_err_interp_lsb": w_i, "max_err_entry_below_lsb": w_n}
 
 
 # ---------------------------------------------------------------- fig 2: accuracy vs cost
