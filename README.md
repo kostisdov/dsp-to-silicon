@@ -41,7 +41,7 @@ make all                              # vectors, HLS C-sim, exhaustive check, te
 `third_party/hls_types` is AMD's open-source `ap_int`/`ap_fixed` (Apache-2.0), fetched by
 `scripts/get_hls_headers.sh` with a two-line patch so it compiles against libc++ on macOS.
 
-Article: [From math to silicon: a DSP block on an FPGA](https://kostisdov.github.io/posts/from-math-to-silicon/).
+Article: [From math to silicon: a DSP block on FPGA](https://kostisdov.github.io/posts/from-math-to-silicon/).
 
 ## License
 
