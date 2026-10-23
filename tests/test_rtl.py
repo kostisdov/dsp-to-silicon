@@ -1,4 +1,4 @@
-"""Build each RTL design with Icarus Verilog and run the cocotb bit-exactness test.
+"""Build each RTL design with Icarus Verilog and run the cocotb RTL verification.
 
     uv run python -m dsp2si.export      # vectors and tables first
     uv run pytest tests/test_rtl.py
@@ -22,7 +22,7 @@ DESIGNS = {
 
 @pytest.mark.skipif(not VECTORS.exists(), reason="run `python -m dsp2si.export` first")
 @pytest.mark.parametrize("kind", ["a", "b"])
-def test_rtl_bit_exact(kind):
+def test_rtl_bit_accurate(kind):
     top, params = DESIGNS[kind]
     runner = get_runner("icarus")
     build_dir = ROOT / "build" / f"sim_{top}"

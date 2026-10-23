@@ -1,10 +1,10 @@
 // z/|z| with CORDIC (architecture B). One sample per clock, latency ITERS + 2.
-// Bit-exact with normalize_b() in dsp2si/models.py.
+// Bit-accurate with normalize_b() in dsp2si/models.py.
 //
 //   S0      block-normalise (common left shift of I, Q) and pre-rotate into the right half plane
 //   S1..SN  vectoring step on (x, y) and the opposite rotation on (u, v), sharing the sign d_j
 //   SN+1    undo the pre-rotation, round, saturate
-// No multipliers and no tables: every stage is four add/subtracts and fixed shifts.
+// No multipliers and no tables: every stage is four adder/subtractors; the shifts are wiring.
 `default_nettype none
 
 module normalize_cordic (
@@ -66,15 +66,21 @@ module normalize_cordic (
             wire signed [W-1:0] xj = xs[j*W +: W], yj = ys[j*W +: W];
             wire signed [W-1:0] uj = us[j*W +: W], vj = vs[j*W +: W];
             wire neg = yj[W-1];
+            // one adder per output: a - b is written as a + ~b + 1, selected by the sign bit,
+            // so synthesis builds a single carry chain instead of an adder, a subtractor and a mux
+            // (shift first, as signed wires: inside an unsigned expression >>> would become a logical shift)
+            wire signed [W-1:0] xsh = xj >>> j, ysh = yj >>> j, ush = uj >>> j, vsh = vj >>> j;
+            wire [W-1:0] sub = {W{neg}}, add = {W{~neg}};                      // invert masks
+            wire [W-1:0] c_sub = {{(W-1){1'b0}}, neg}, c_add = {{(W-1){1'b0}}, ~neg};  // carry-in
             always @(posedge clk) begin
                 vld[j+1] <= vld[j];
                 lft[j+1] <= lft[j];
                 upp[j+1] <= upp[j];
                 zro[j+1] <= zro[j];
-                xs[(j+1)*W +: W] <= neg ? xj - (yj >>> j) : xj + (yj >>> j);
-                ys[(j+1)*W +: W] <= neg ? yj + (xj >>> j) : yj - (xj >>> j);
-                us[(j+1)*W +: W] <= neg ? uj + (vj >>> j) : uj - (vj >>> j);
-                vs[(j+1)*W +: W] <= neg ? vj - (uj >>> j) : vj + (uj >>> j);
+                xs[(j+1)*W +: W] <= xj + (ysh ^ sub) + c_sub;  // neg ? x - y' : x + y'
+                ys[(j+1)*W +: W] <= yj + (xsh ^ add) + c_add;  // neg ? y + x' : y - x'
+                us[(j+1)*W +: W] <= uj + (vsh ^ add) + c_add;  // neg ? u + v' : u - v'
+                vs[(j+1)*W +: W] <= vj + (ush ^ sub) + c_sub;  // neg ? v - u' : v + u'
             end
         end
     endgenerate

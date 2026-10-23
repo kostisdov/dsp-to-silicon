@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" width="900" height="300" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5c554a"/>
+    </marker>
+    <marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c34a22"/>
+    </marker>
+  </defs>
+  <rect width="900" height="300" fill="#fbfaf8"/>
+
+  <!-- golden vectors: fixed-point model to RTL verification -->
+  <path d="M228,115 V40 H524 V113" fill="none" stroke="#c34a22" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arA)"/>
+  <text x="376" y="32" text-anchor="middle" font-size="13" fill="#c34a22" font-style="italic">golden vectors and expected outputs</text>
+
+  <!-- feedback: error budget and resources/timing -->
+  <path d="M190,185 V214 H80 V187" fill="none" stroke="#5c554a" stroke-width="1.1" marker-end="url(#ar)"/>
+  <text x="135" y="230" text-anchor="middle" font-size="12" fill="#5c554a" font-style="italic">error budget</text>
+  <path d="M672,185 V268 H266 V187" fill="none" stroke="#5c554a" stroke-width="1.1" marker-end="url(#ar)"/>
+  <text x="469" y="285" text-anchor="middle" font-size="12" fill="#5c554a" font-style="italic">resources and timing: revise word lengths or architecture</text>
+
+  <!-- forward arrows -->
+  <g stroke="#5c554a" stroke-width="1.3" fill="none" marker-end="url(#ar)">
+    <path d="M145,150 H161"/>
+    <path d="M293,150 L309,102"/>
+    <path d="M293,150 L309,198"/>
+    <path d="M441,100 L457,148"/>
+    <path d="M441,200 L457,152"/>
+    <path d="M589,150 H605"/>
+    <path d="M737,150 H753"/>
+  </g>
+
+  <!-- boxes -->
+  <g stroke="#d8cfbc" stroke-width="1.2" fill="#ffffff">
+    <rect x="15" y="115" width="130" height="70" rx="6"/>
+    <rect x="163" y="115" width="130" height="70" rx="6" stroke="#c34a22" stroke-width="1.6"/>
+    <rect x="311" y="65" width="130" height="70" rx="6"/>
+    <rect x="311" y="165" width="130" height="70" rx="6"/>
+    <rect x="459" y="115" width="130" height="70" rx="6"/>
+    <rect x="607" y="115" width="130" height="70" rx="6"/>
+    <rect x="755" y="115" width="130" height="70" rx="6" stroke-dasharray="4 3" fill="#fbfaf8"/>
+  </g>
+
+  <g text-anchor="middle" fill="#221e17">
+    <text x="80" y="143" font-size="15">Algorithm</text>
+    <text x="80" y="162" font-size="12" fill="#5c554a">floating point</text>
+    <text x="80" y="177" font-size="12" fill="#5c554a">Python, MATLAB</text>
+
+    <text x="228" y="143" font-size="15">Fixed-point model</text>
+    <text x="228" y="162" font-size="12" fill="#5c554a">bit-accurate</text>
+    <text x="228" y="177" font-size="12" fill="#5c554a">golden reference</text>
+
+    <text x="376" y="94" font-size="15">HLS C++</text>
+    <text x="376" y="113" font-size="12" fill="#5c554a">C-sim,</text>
+    <text x="376" y="127" font-size="12" fill="#5c554a">C/RTL co-simulation</text>
+
+    <text x="376" y="194" font-size="15">Hand-written RTL</text>
+    <text x="376" y="213" font-size="12" fill="#5c554a">Verilog, VHDL</text>
+
+    <text x="524" y="143" font-size="15">RTL verification</text>
+    <text x="524" y="162" font-size="12" fill="#5c554a">testbench against</text>
+    <text x="524" y="177" font-size="12" fill="#5c554a">the golden model</text>
+
+    <text x="672" y="138" font-size="15">Synthesis and</text>
+    <text x="672" y="155" font-size="15">implementation</text>
+    <text x="672" y="174" font-size="12" fill="#5c554a">resources, timing</text>
+
+    <text x="820" y="143" font-size="15">Hardware test</text>
+    <text x="820" y="162" font-size="12" fill="#5c554a">on the board,</text>
+    <text x="820" y="177" font-size="12" fill="#5c554a">in the system</text>
+  </g>
+</svg>

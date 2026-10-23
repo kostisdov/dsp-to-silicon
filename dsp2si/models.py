@@ -1,9 +1,9 @@
 """Reference models for z/|z| (unit-phasor normalisation of a complex sample).
 
-Every fixed-point function here works on Python/NumPy integers and is the bit-exact
+Every fixed-point function here works on Python/NumPy integers and is the bit-accurate
 golden reference for the HLS C++ and the Verilog. Arithmetic right shifts (>>) on
 signed integers floor towards minus infinity, exactly like Verilog's >>> on signed
-operands, so the two agree bit for bit.
+operands, so the two agree on every bit.
 
 Formats
   input  I, Q : signed 16-bit, Q1.15 (value = I / 2**15)
@@ -45,8 +45,8 @@ def round_shift(v, sh):
 @dataclass(frozen=True)
 class RsqrtCfg:
     addr_bits: int = 9      # A: table address bits taken from the normalised power
-    frac_bits: int = 10     # F: interpolation fraction bits
-    r_frac: int = 16        # table values R = 1/sqrt(u) in unsigned Q2.16 (u in [1/4, 1) -> R in (1, 2])
+    frac_bits: int = 12     # F: interpolation fraction bits
+    r_frac: int = 17        # table values R = 1/sqrt(u) in unsigned Q2.17 (u in [1/4, 1) -> R in (1, 2])
 
 
 def rsqrt_tables(cfg: RsqrtCfg):
@@ -69,13 +69,13 @@ def clz32(p):
 
 
 def normalize_a(i, q, cfg: RsqrtCfg = RsqrtCfg(), trace=False):
-    """Bit-exact model of architecture A.
+    """Bit-accurate model of architecture A.
 
-    1. P = I^2 + Q^2                                   (unsigned, < 2**31)
+    1. P = I^2 + Q^2                                   (unsigned, <= 2**31)
     2. s = clz(P) rounded down to even; m = P << s     (m in [2**30, 2**32): u = m / 2**32 in [1/4, 1))
     3. k = m >> (32 - A); f = next F bits of m
-       R = T[k] - ((D[k] * f + 2**(F-1)) >> F)         (~ 2**16 / sqrt(u))
-    4. X = sat(round(I * R / 2**(17 - s/2)))           (since 1/sqrt(P) = 2**(s/2 - 16) / sqrt(u))
+       R = T[k] - ((D[k] * f + 2**(F-1)) >> F)         (~ 2**r_frac / sqrt(u))
+    4. X = sat(round(I * R / 2**(r_frac + 1 - s/2)))   (since 1/sqrt(P) = 2**(s/2 - 16) / sqrt(u))
     """
     A, F = cfg.addr_bits, cfg.frac_bits
     i = np.asarray(i, dtype=np.int64)
@@ -91,7 +91,7 @@ def normalize_a(i, q, cfg: RsqrtCfg = RsqrtCfg(), trace=False):
     k = m >> (32 - A)
     f = (m >> (32 - A - F)) & ((1 << F) - 1)
     r = base[k - off] - ((slope[k - off] * f + (1 << (F - 1))) >> F)
-    sh = 17 - (s >> 1)
+    sh = cfg.r_frac + 1 - (s >> 1)
     x = np.where(zero, 0, sat(round_shift(i * r, sh)))
     y = np.where(zero, 0, sat(round_shift(q * r, sh)))
     if trace:
@@ -104,7 +104,7 @@ def normalize_a(i, q, cfg: RsqrtCfg = RsqrtCfg(), trace=False):
 @dataclass(frozen=True)
 class CordicCfg:
     iters: int = 18         # N micro-rotations
-    guard: int = 5          # extra fractional bits inside the datapath
+    guard: int = 8          # extra fractional bits inside the datapath
     prenorm: bool = True    # block normalisation before the micro-rotations (off only to show why it matters)
 
 
@@ -113,7 +113,7 @@ def cordic_gain(n):
 
 
 def normalize_b(i, q, cfg: CordicCfg = CordicCfg(), trace=False):
-    """Bit-exact model of architecture B.
+    """Bit-accurate model of architecture B.
 
     Vectoring pass on (x, y) = z: each step picks d = +1 if y < 0 else -1 and rotates by
     -d*atan(2**-j) towards the x axis. The rotation pass applies the same signs to

@@ -1,0 +1,26 @@
+[
+ {
+  "design": "A",
+  "mutation": "interpolation rounding constant 2048 -> 2047",
+  "flagged": 921,
+  "checked": 100015
+ },
+ {
+  "design": "A",
+  "mutation": "output rounding removed",
+  "flagged": 71739,
+  "checked": 100015
+ },
+ {
+  "design": "B",
+  "mutation": "output rounding removed",
+  "flagged": 70323,
+  "checked": 100015
+ },
+ {
+  "design": "B",
+  "mutation": "last micro-rotation sign inverted",
+  "flagged": 57762,
+  "checked": 100015
+ }
+]

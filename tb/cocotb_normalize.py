@@ -1,5 +1,5 @@
 """cocotb testbench: stream the golden vectors through the RTL, one sample per clock,
-and check every output bit-exactly against the fixed-point model.
+and check every output against the bit-accurate fixed-point model.
 
 The architecture under test is chosen with the DUT_KIND environment variable:
 'a' (table-based, columns xa ya) or 'b' (CORDIC, columns xb yb).
@@ -17,7 +17,7 @@ COLS = {"a": (2, 3), "b": (4, 5)}
 
 
 @cocotb.test()
-async def bit_exact_against_golden_model(dut):
+async def bit_accurate_against_golden_model(dut):
     kind = os.environ["DUT_KIND"]
     data = np.loadtxt(os.environ["VECTORS"], dtype=np.int64)
     limit = int(os.environ.get("N_VECTORS", "0")) or len(data)
@@ -64,6 +64,9 @@ async def bit_exact_against_golden_model(dut):
             pending.append((i, q, int(row[cx]), int(row[cy])))
 
     dut._log.info(f"checked {checked} samples, {mismatches} mismatches")
+    if os.environ.get("REPORT"):
+        with open(os.environ["REPORT"], "w") as fh:
+            fh.write(f"{checked} {mismatches}\n")
     assert not pending, f"{len(pending)} samples never came out of the pipeline"
     assert checked == len(data)
     assert mismatches == 0

@@ -9,6 +9,7 @@ Resource counts are read from the Yosys reports in build/synth (run scripts/synt
 import json
 import pathlib
 import re
+import subprocess
 import sys
 
 import matplotlib
@@ -72,30 +73,37 @@ def fig_table(res):
     f = (m >> (32 - A - F)) & ((1 << F) - 1)
     r_interp = base[kk - (1 << (A - 2))] - ((slope[kk - (1 << (A - 2))] * f + (1 << (F - 1))) >> F)
     r_near = base[kk - (1 << (A - 2))]
-    e_i = r_interp - exact * 2**16
-    e_n = r_near - exact * 2**16
-    a2.semilogy(u, np.abs(e_n) + 1e-3, color=STONE, lw=0.8, label="nearest entry only")
+    e_i = r_interp - exact * 2**cfg.r_frac
+    e_n = r_near - exact * 2**cfg.r_frac
+    a2.semilogy(u, np.abs(e_n) + 1e-3, color=STONE, lw=0.8, label="entry below, no interpolation")
     a2.semilogy(u, np.abs(e_i) + 1e-3, color=ACCENT, lw=0.9, label="linear interpolation")
     a2.set_xlabel("normalised power $u$")
-    a2.set_ylabel("|error| of $R$ (LSB of $2^{-16}$)")
+    a2.set_ylabel("|error| of $R$ (LSB of $2^{-17}$)")
     a2.set_ylim(1e-2, 2e3)
     a2.legend(loc="upper right", fontsize=10)
     clean(a2)
     save(fig, "fig1-rsqrt-table.svg")
-    res["table"] = {"entries": int(len(base)), "base_bits": 18, "slope_bits": 10,
-                    "max_err_interp_lsb16": float(np.abs(e_i).max()), "max_err_nearest_lsb16": float(np.abs(e_n).max())}
+    res["table"] = {"entries": int(len(base)), "base_bits": int(base.max()).bit_length(), "slope_bits": 10,
+                    "max_slope": int(slope.max()), "lsb": f"2^-{cfg.r_frac}",
+                    "max_err_interp_lsb": float(np.abs(e_i).max()), "max_err_entry_below_lsb": float(np.abs(e_n).max())}
 
 
 # ---------------------------------------------------------------- fig 2: accuracy vs cost
 
+EXH = ROOT / "build" / "exhaustive"
+
+
+def exhaustive(*args):
+    """Worst case and RMS over all 2^32 inputs, from tools/exhaustive.cpp."""
+    out = subprocess.run([str(EXH), *map(str, args)], capture_output=True, text=True, check=True).stdout
+    w, rms = re.search(r"worst ([\d.]+) LSB.*rms ([\d.]+) LSB", out).groups()
+    return float(w), float(rms)
+
+
 def fig_sweep(res, i, q):
-    rows_a, rows_b = [], []
-    for A in range(5, 11):
-        x, y = normalize_a(i, q, RsqrtCfg(A, 10))
-        rows_a.append((3 * 2 ** (A - 2), errors(x, y, i, q)["max_lsb"]))
-    for n in range(8, 23):
-        x, y = normalize_b(i, q, CordicCfg(n, 5))
-        rows_b.append((n, errors(x, y, i, q)["max_lsb"]))
+    cfg_a, cfg_b = RsqrtCfg(), CordicCfg()
+    rows_a = [(3 * 2 ** (A - 2), exhaustive("a", A, cfg_a.frac_bits, cfg_a.r_frac)[0]) for A in range(5, 11)]
+    rows_b = [(n, exhaustive("b", n, cfg_b.guard)[0]) for n in range(8, 23)]
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 3.6), sharey=True)
     ea = np.array(rows_a)
     eb = np.array(rows_b)
@@ -151,7 +159,8 @@ def fig_magnitude(res):
 def read_stat(top):
     text = (ROOT / "build" / "synth" / f"{top}.stat").read_text()
     cells = {name: int(n) for n, name in re.findall(r"^\s+(\d+)\s+(\w+)\s*$", text, re.M)}
-    lut = sum(v for k, v in cells.items() if re.fullmatch(r"LUT[1-6]", k))
+    # INV cells are LUT1s on a 7-series device
+    lut = sum(v for k, v in cells.items() if re.fullmatch(r"LUT[1-6]|INV", k))
     ff = sum(v for k, v in cells.items() if k in ("FDRE", "FDSE", "FDCE", "FDPE"))
     srl = sum(v for k, v in cells.items() if k.startswith("SRL"))
     dsp = cells.get("DSP48E1", 0)
@@ -159,21 +168,29 @@ def read_stat(top):
     return {"LUT": lut, "FF": ff, "SRL": srl, "DSP48": dsp, "BRAM": bram, "CARRY4": cells.get("CARRY4", 0)}
 
 
+# Artix-7 XC7A35T, a small and common 7-series part, as the yardstick
+DEVICE = {"name": "Artix-7 XC7A35T", "LUT": 20800, "FF": 41600, "DSP48": 90, "BRAM": 50}
+
+
 def fig_resources(res):
     a, b = read_stat("normalize_lut"), read_stat("normalize_cordic")
-    res["resources"] = {"A": a, "B": b}
-    cats = ["LUT", "FF", "DSP48"]
-    fig, axes = plt.subplots(1, 3, figsize=(9, 3.2))
-    for ax, c in zip(axes, cats):
-        ax.bar([0, 1], [a[c], b[c]], color=[ACCENT, ACCENT_DEEP], width=0.6)
-        for xpos, v in zip([0, 1], [a[c], b[c]]):
-            ax.text(xpos, v, f"{v}", ha="center", va="bottom", fontsize=11, color=INK)
-        ax.set_xticks([0, 1], ["A: table", "B: CORDIC"])
-        ax.set_title(c, fontsize=12, color=INK)
-        ax.set_yticks([])
-        ax.set_ylim(0, max(a[c], b[c], 1) * 1.18)
-        for side in ("top", "right", "left"):
-            ax.spines[side].set_visible(False)
+    res["resources"] = {"A": a, "B": b, "device": DEVICE}
+    rows = [("LUT", "LUTs"), ("FF", "Flip-flops"), ("DSP48", "DSP slices")]  # neither design uses block RAM
+    fig, ax = plt.subplots(figsize=(8.5, 2.8))
+    h = 0.36
+    for r, (key, label) in enumerate(rows):
+        y0 = len(rows) - 1 - r
+        for off, d, col, name in ((h / 2, a, ACCENT, "A: table"), (-h / 2, b, ACCENT_DEEP, "B: CORDIC")):
+            pct = 100 * d[key] / DEVICE[key]
+            ax.barh(y0 + off, pct, height=h * 0.92, color=col, label=name if r == 0 else None)
+            ax.text(pct + 0.25, y0 + off, f"{d[key]:,}", va="center", fontsize=10, color=INK)
+    ax.set_yticks(range(len(rows)), [lab for _, lab in rows][::-1])
+    ax.set_xlabel(f"share of an {DEVICE['name']} (%)")
+    ax.set_xlim(0, 14)
+    ax.tick_params(axis="y", length=0)
+    ax.legend(loc="lower right", fontsize=10)
+    for side in ("top", "right", "left"):
+        ax.spines[side].set_visible(False)
     save(fig, "fig4-resources.svg")
 
 
@@ -184,11 +201,13 @@ def main():
     fig_sweep(res, i, q)
     fig_magnitude(res)
     fig_resources(res)
-    xa, ya = normalize_a(i, q)
-    xb, yb = normalize_b(i, q)
-    res["accuracy"] = {"A": errors(xa, ya, i, q), "B": errors(xb, yb, i, q)}
+    ca, cb = RsqrtCfg(), CordicCfg()
+    wa, ra = exhaustive("a", ca.addr_bits, ca.frac_bits, ca.r_frac)
+    wb, rb = exhaustive("b", cb.iters, cb.guard)
+    res["accuracy_exhaustive"] = {"A": {"max_lsb": wa, "rms_lsb": ra}, "B": {"max_lsb": wb, "rms_lsb": rb},
+                                  "inputs": 2**32 - 1}
     (OUT / "results.json").write_text(json.dumps(res, indent=1))
-    print(json.dumps({k: res[k] for k in ("accuracy", "resources", "table")}, indent=1))
+    print(json.dumps({k: res[k] for k in ("accuracy_exhaustive", "resources", "table")}, indent=1))
 
 
 if __name__ == "__main__":

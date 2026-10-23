@@ -6,3 +6,4 @@ __pycache__/
 *.fst
 results.xml
 third_party/hls_types/
+*.result.xml
