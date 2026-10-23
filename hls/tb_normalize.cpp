@@ -1,4 +1,4 @@
-// C simulation (C-sim): the HLS function must match the bit-accurate Python golden model.
+// C simulation (C-sim): the HLS function must be bit-accurate to the Python golden model.
 // The CPU float version is measured against the same vectors for comparison.
 #include <cmath>
 #include <complex>

@@ -49,8 +49,8 @@
     <text x="80" y="177" font-size="12" fill="#5c554a">Python, MATLAB</text>
 
     <text x="228" y="143" font-size="15">Fixed-point model</text>
-    <text x="228" y="162" font-size="12" fill="#5c554a">bit-accurate</text>
-    <text x="228" y="177" font-size="12" fill="#5c554a">golden reference</text>
+    <text x="228" y="162" font-size="12" fill="#5c554a">golden reference,</text>
+    <text x="228" y="177" font-size="12" fill="#5c554a">defines performance</text>
 
     <text x="376" y="94" font-size="15">HLS C++</text>
     <text x="376" y="113" font-size="12" fill="#5c554a">C-sim, C synthesis,</text>
@@ -60,7 +60,7 @@
     <text x="376" y="213" font-size="12" fill="#5c554a">Verilog, VHDL</text>
 
     <text x="524" y="143" font-size="15">RTL verification</text>
-    <text x="524" y="162" font-size="12" fill="#5c554a">testbench against</text>
+    <text x="524" y="162" font-size="12" fill="#5c554a">bit-accurate to</text>
     <text x="524" y="177" font-size="12" fill="#5c554a">the golden model</text>
 
     <text x="672" y="138" font-size="15">Synthesis and</text>

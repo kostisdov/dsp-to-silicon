@@ -1,5 +1,5 @@
 """cocotb testbench: stream the golden vectors through the RTL, one sample per clock,
-and check every output against the bit-accurate fixed-point model.
+and require every output to be bit-accurate to the fixed-point golden model.
 
 The architecture under test is chosen with the DUT_KIND environment variable:
 'a' (table-based, columns xa ya) or 'b' (CORDIC, columns xb yb).

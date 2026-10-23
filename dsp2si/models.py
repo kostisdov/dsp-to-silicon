@@ -1,7 +1,7 @@
 """Reference models for z/|z| (unit-phasor normalisation of a complex sample).
 
-Every fixed-point function here works on Python/NumPy integers and is the bit-accurate
-golden reference for the HLS C++ and the Verilog. Arithmetic right shifts (>>) on
+Every fixed-point function here works on Python/NumPy integers and is the golden
+reference model: the HLS C++ and the Verilog must be bit-accurate to it. Arithmetic right shifts (>>) on
 signed integers floor towards minus infinity, exactly like Verilog's >>> on signed
 operands, so the two agree on every bit.
 
@@ -69,7 +69,7 @@ def clz32(p):
 
 
 def normalize_a(i, q, cfg: RsqrtCfg = RsqrtCfg(), trace=False):
-    """Bit-accurate model of architecture A.
+    """Fixed-point golden model of architecture A.
 
     1. P = I^2 + Q^2                                   (unsigned, <= 2**31)
     2. s = clz(P) rounded down to even; m = P << s     (m in [2**30, 2**32): u = m / 2**32 in [1/4, 1))
@@ -113,7 +113,7 @@ def cordic_gain(n):
 
 
 def normalize_b(i, q, cfg: CordicCfg = CordicCfg(), trace=False):
-    """Bit-accurate model of architecture B.
+    """Fixed-point golden model of architecture B.
 
     Vectoring pass on (x, y) = z: each step picks d = +1 if y < 0 else -1 and rotates by
     -d*atan(2**-j) towards the x axis. The rotation pass applies the same signs to
